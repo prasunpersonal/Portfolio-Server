@@ -13,14 +13,11 @@ router.get('/all', async (req, res) => {
 
 router.get('/categories', async (req, res) => {
     try {
-        const catagoryMap = new Map();
+        const categories = new Set();
         (await Project.find()).forEach(project => {
-            const key = project.projectCategory;
-            const subCategories = new Set(catagoryMap.get(key));
-            if (project.projectSubCategory) subCategories.add(project.projectSubCategory);
-            catagoryMap.set(key, Array.from(subCategories).sort());
+            categories.add(project.projectCategory);
         });
-        res.json(Object.fromEntries(catagoryMap));
+        res.json(Array.from(catagoryMap));
     } catch (error) {
         res.json({ "Error": error });
     }
