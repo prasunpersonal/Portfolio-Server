@@ -5,7 +5,7 @@ const Project = require('../Models/projectModel');
 
 router.get('/all', async (req, res) => {
     try {
-        res.json(await Project.find().sort((a, b) => b.projectDate.localeCompare(a.projectDate)));
+        res.json(await Project.find().sort((a, b) => (b.projectDate.localeCompare(a.projectDate))));
     } catch (error) {
         res.json({ "Error": error });
     }
