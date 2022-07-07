@@ -19,27 +19,19 @@ router.get('/:id', async(req, res) => {
     }
 });
 
-router.post('/add', async(req, res) => {
+router.post('/add', multer({
+    storage: multer.diskStorage({
+        destination: (req, file, cb) => { cb(null, './Uploads/certificates') },
+        filename: (req, file, cb) => { cb(null, 'certificate'.concat('-', Date.now(), '.', file.originalname.split('.').pop())) }
+    })
+}).single('certificateImage'), async(req, res) => {
     try {
-        res.json(await new Certificate(req.body).save());
+        const certificate = new Certificate(req.body);
+        certificate.certificateImageUrl = req.protocol.concat('://', req.headers.host, '/uploads/certificates/', req.file.filename);
+        res.json(await certificate.save());
     } catch (error) {
         res.json({"Error":error});
     }
-});
-
-router.post('/upload/:id', multer({
-    storage: multer.diskStorage({
-        destination: (req, file, cb) => { cb(null, './Uploads/certificates') },
-        filename: (req, file, cb) => { cb(null, req.params.id.concat('.', file.originalname.split('.').pop())) }
-    })
-}).single('image'), (req, res) => {
-    Certificate.findByIdAndUpdate(req.params.id, { certificateImageUrl: req.protocol.concat('://', req.headers.host, '/uploads/certificates/', req.file.filename) }, (error) => {
-        if (error) {
-            res.json({ "Error": error });
-        } else {
-            res.json({ "message": "Image updated successfully" });
-        }
-    });
 });
 
 module.exports = router;
