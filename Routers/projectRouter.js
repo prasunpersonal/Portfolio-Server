@@ -21,7 +21,6 @@ router.get('/categories', async (req, res) => {
     } catch (error) {
         res.json({ "Error": error });
     }
-    
 });
 
 router.get('/:id', async (req, res) => {
