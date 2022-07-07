@@ -17,7 +17,7 @@ router.get('/categories', async (req, res) => {
         (await Project.find()).forEach(project => {
             categories.add(project.projectCategory);
         });
-        res.json(Array.from(catagoryMap));
+        res.json(Array.from(categories));
     } catch (error) {
         res.json({ "Error": error });
     }
