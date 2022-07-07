@@ -20,6 +20,7 @@ router.get('/languages-and-frameworks', async (req, res) => {
     }
 });
 
+
 router.get('/databases', async (req, res) => {
     try {
         res.json((await Skill.find({ skillCategory: "Database" })).sort((a, b) => a.skillName.localeCompare(b.skillName)));
