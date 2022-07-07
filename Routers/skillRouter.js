@@ -6,7 +6,7 @@ const Skill = require('../Models/skillModel');
 
 router.get('/all', async (req, res) => {
     try {
-        res.json(await Skill.find());
+        res.json(await Skill.find().sort((a, b) => a.skillName - b.skillName));
     } catch (error) {
         res.json({ "Error": error });
     }
@@ -14,7 +14,7 @@ router.get('/all', async (req, res) => {
 
 router.get('/languages-and-frameworks', async (req, res) => {
     try {
-        res.json(await Skill.find({ skillCategory: "LanguageAndFramework" }));
+        res.json(await Skill.find({ skillCategory: "LanguageAndFramework" }).sort((a, b) => a.skillName - b.skillName));
     } catch (error) {
         res.json({ "Error": error });
     }
@@ -22,7 +22,7 @@ router.get('/languages-and-frameworks', async (req, res) => {
 
 router.get('/databases', async (req, res) => {
     try {
-        res.json(await Skill.find({ skillCategory: "Database" }));
+        res.json(await Skill.find({ skillCategory: "Database" }).sort((a, b) => a.skillName - b.skillName));
     } catch (error) {
         res.json({ "Error": error });
     }
@@ -30,7 +30,7 @@ router.get('/databases', async (req, res) => {
 
 router.get('/profiles', async (req, res) => {
     try {
-        res.json(await Skill.find({ skillCategory: "Profile" }));
+        res.json(await Skill.find({ skillCategory: "Profile" }).sort((a, b) => a.skillName - b.skillName));
     } catch (error) {
         res.json({ "Error": error });
     }

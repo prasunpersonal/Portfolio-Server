@@ -5,7 +5,7 @@ const Certificate = require('../Models/certificateModel');
 
 router.get('/all', async(req, res) => {
     try {
-        res.json(await Certificate.find());
+        res.json(await Certificate.find().sort((a, b) => b.certificateDate - a.certificateDate));
     } catch (error) {
         res.json({"Error":error});
     }

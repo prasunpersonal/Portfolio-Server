@@ -5,7 +5,7 @@ const Project = require('../Models/projectModel');
 
 router.get('/all', async (req, res) => {
     try {
-        res.json(await Project.find());
+        res.json(await Project.find().sort((a, b) => b.projectDate - a.projectDate));
     } catch (error) {
         res.json({ "Error": error });
     }
@@ -17,7 +17,7 @@ router.get('/categories', async (req, res) => {
         (await Project.find()).forEach(project => {
             categories.add(project.projectCategory);
         });
-        res.json(Array.from(categories));
+        res.json(Array.from(categories).sort());
     } catch (error) {
         res.json({ "Error": error });
     }
