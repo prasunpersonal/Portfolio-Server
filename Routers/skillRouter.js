@@ -6,7 +6,7 @@ const Skill = require('../Models/skillModel');
 
 router.get('/all', async (req, res) => {
     try {
-        res.json(await Skill.find().sort((a, b) => a.skillName - b.skillName));
+        res.json(await Skill.find().sort((a, b) => (a.skillName - b.skillName)));
     } catch (error) {
         res.json({ "Error": error });
     }
