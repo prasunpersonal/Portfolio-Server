@@ -21,6 +21,7 @@ app.use('/uploads', express.static('Uploads'))
 app.use('/projects', require('./Routers/projectRouter'));
 app.use('/skills', require('./Routers/skillRouter'));
 app.use('/certificates', require('./Routers/certificateRouter'));
+app.use('/services', require('./Routers/serviceRouter'));
 
 app.listen(port, () => {
     console.log('Server running on port ' + port);
