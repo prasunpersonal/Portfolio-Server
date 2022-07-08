@@ -1,27 +1,20 @@
 const express = require('express');
 const router = express.Router();
 const nodemailer = require('nodemailer');
+const mailgun = require('nodemailer-mailgun-transport');
 
 
-router.post('/sendemail', (req, res) => {
-    console.log(req.body);
-    const transporter = nodemailer.createTransport({
-        host: "smtp.gmail.com",
-        auth: {
-            user: process.env.GMAIL_USERNAME,
-            pass: process.env.GMAIL_PASSWORD,
-        },
-    });
-
-    const mailOptions = {
-        to: "prasunsarkar.personal@gmail.com",
-        from: req.body.from,
+router.post('/sendemail', (req, res) => {    
+    nodemailer.createTransport(mailgun({auth: {
+        api_key: process.env.MAILGUN_API_KEY,
+        domain: process.env.MAILGUN_DOMAIN
+    }})).sendMail({
+        to: process.env.GMAIL_ADDRESS,
+        from: "Portfolio @ ".concat(req.body.name,' <', req.body.email, '>'),
         subject: req.body.subject,
         text: req.body.text
-    };
-    
-    transporter.sendMail(mailOptions, (e) => {
-        if (e) res.json({"message": e});
+    }, (e) => {
+        if (e) res.json({"message": e.message});
         else res.json({"message": "Mail sent successfully!"});
     });
 });
