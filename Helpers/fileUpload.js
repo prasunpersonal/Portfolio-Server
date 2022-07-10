@@ -12,7 +12,7 @@ module.exports = {
     imageUpload: (file, parentFolder) => {
         return new Promise((resolve, reject) => {
             cloudinary.uploader.upload(new DatauriParser().format(path.extname(file.originalname).toString(), file.buffer).content, {
-                folder: "images/".concat(parentFolder),
+                folder: "portfolio/images/".concat(parentFolder),
                 public_id: parentFolder.concat('-', Date.now(), '.', file.originalname.split('.').pop())
             }).then(res => {
                 resolve(res.secure_url);
@@ -24,7 +24,7 @@ module.exports = {
     videoUpload: (file, parentFolder) => {
         return new Promise((resolve, reject) => {
             cloudinary.uploader.upload(new DatauriParser().format(path.extname(file.originalname).toString(), file.buffer).content, {
-                folder: "videos/".concat(parentFolder),
+                folder: "portfolio/videos/".concat(parentFolder),
                 public_id: parentFolder.concat('-', Date.now(), '.', file.originalname.split('.').pop())
             }).then(res => {
                 resolve(res.secure_url);
