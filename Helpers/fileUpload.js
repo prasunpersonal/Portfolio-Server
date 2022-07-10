@@ -1,4 +1,6 @@
 const cloudinary = require('cloudinary').v2;
+const path = require('path');
+const DatauriParser = require('datauri/parser');
 
 cloudinary.config({
     cloud_name: process.env.CLOUD_NAME,
@@ -9,9 +11,9 @@ cloudinary.config({
 module.exports = {
     imageUpload: (file, parentFolder) => {
         return new Promise((resolve, reject) => {
-            cloudinary.uploader.upload(file.path, {
+            cloudinary.uploader.upload(new DatauriParser().format(path.extname(file.originalname).toString(), file.buffer).content, {
                 folder: "images/".concat(parentFolder),
-                public_id: file.filename
+                public_id: parentFolder.concat('-', Date.now(), '.', file.originalname.split('.').pop())
             }).then(res => {
                 resolve(res.secure_url);
             }).catch(err => {
@@ -21,9 +23,9 @@ module.exports = {
     },
     videoUpload: (file, parentFolder) => {
         return new Promise((resolve, reject) => {
-            cloudinary.uploader.upload(file.path, {
+            cloudinary.uploader.upload(new DatauriParser().format(path.extname(file.originalname).toString(), file.buffer).content, {
                 folder: "videos/".concat(parentFolder),
-                public_id: file.filename
+                public_id: parentFolder.concat('-', Date.now(), '.', file.originalname.split('.').pop())
             }).then(res => {
                 resolve(res.secure_url);
             }).catch(err => {

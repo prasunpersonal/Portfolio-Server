@@ -36,12 +36,7 @@ router.get('/profiles', async (req, res) => {
     }
 });
 
-router.post('/add', multer({
-    storage: multer.diskStorage({
-        destination: (req, file, cb) => { cb(null, './tmp_uploads/') },
-        filename: (req, file, cb) => { cb(null, "skill".concat('-', Date.now(), '.', file.originalname.split('.').pop())) }
-    })
-}).single('skillImage'), async (req, res) => {
+router.post('/add', multer({storage: multer.memoryStorage()}).single('skillImage'), async (req, res) => {
     try {
         const skill = new Skill(req.body);
         skill.skillImageUrl = await fileUploadHelper.imageUpload(req.file, "skills");

@@ -20,12 +20,7 @@ router.get('/:id', async(req, res) => {
     }
 });
 
-router.post('/add', multer({
-    storage: multer.diskStorage({
-        destination: (req, file, cb) => { cb(null, './tmp_uploads/') },
-        filename: (req, file, cb) => { cb(null, 'certificate'.concat('-', Date.now(), '.', file.originalname.split('.').pop())) }
-    })
-}).single('certificateImage'), async(req, res) => {
+router.post('/add', multer({storage: multer.memoryStorage()}).single('certificateImage'), async(req, res) => {
     try {
         const certificate = new Certificate(req.body);
         certificate.certificateImageUrl = await fileUploadHelper.imageUpload(req.file, "certificates");

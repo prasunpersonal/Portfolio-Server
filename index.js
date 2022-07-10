@@ -24,7 +24,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-app.use('/uploads', express.static('Uploads'))
 app.use('/projects', require('./Routers/projectRouter'));
 app.use('/skills', require('./Routers/skillRouter'));
 app.use('/certificates', require('./Routers/certificateRouter'));

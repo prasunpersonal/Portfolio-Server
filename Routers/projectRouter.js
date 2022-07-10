@@ -32,12 +32,7 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-router.post('/add', multer({
-    storage: multer.diskStorage({
-        destination: (req, file, cb) => { cb(null, './tmp_uploads/') },
-        filename: (req, file, cb) => { cb(null, "project".concat('-', Date.now(), '.', file.originalname.split('.').pop())) }
-    })
-}).single('projectThumblail'), async (req, res) => {
+router.post('/add', multer({storage: multer.memoryStorage()}).single('projectThumblail'), async (req, res) => {
     try {
         const project = new Project(req.body);
         project.projectThumblailUrl = await fileUploadHelper.imageUpload(req.file, "skills");
