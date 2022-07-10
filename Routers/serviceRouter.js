@@ -3,7 +3,6 @@ const router = express.Router();
 const nodemailer = require('nodemailer');
 const mailgun = require('nodemailer-mailgun-transport');
 
-
 router.post('/sendemail', (req, res) => {    
     nodemailer.createTransport(mailgun({auth: {
         api_key: process.env.MAILGUN_API_KEY,

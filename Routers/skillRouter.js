@@ -1,8 +1,8 @@
 const express = require('express');
 const multer = require('multer');
-const url = require('url');
 const router = express.Router();
 const Skill = require('../Models/skillModel');
+const fileUploadHelper = require('../Helpers/fileUpload');
 
 router.get('/all', async (req, res) => {
     try {
@@ -38,17 +38,17 @@ router.get('/profiles', async (req, res) => {
 
 router.post('/add', multer({
     storage: multer.diskStorage({
-        destination: (req, file, cb) => { cb(null, './Uploads/skills/') },
-        filename: (req, file, cb) => { cb(null,"skill".concat('-', Date.now(), '.', file.originalname.split('.').pop())) }
+        destination: (req, file, cb) => { cb(null, './tmp_uploads/') },
+        filename: (req, file, cb) => { cb(null, "skill".concat('-', Date.now(), '.', file.originalname.split('.').pop())) }
     })
 }).single('skillImage'), async (req, res) => {
     try {
         const skill = new Skill(req.body);
-        skill.skillImageUrl = req.protocol.concat('://', req.headers.host, '/uploads/skills/', req.file.filename);
+        skill.skillImageUrl = await fileUploadHelper.imageUpload(req.file, "skills");
         res.json(await skill.save());
     } catch (error) {
-        res.json({ "Error": error });
+        res.json(error);
     }
-});
+})
 
 module.exports = router;

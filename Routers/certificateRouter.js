@@ -2,6 +2,7 @@ const express = require('express');
 const multer = require('multer');
 const router = express.Router();
 const Certificate = require('../Models/certificateModel');
+const fileUploadHelper = require('../Helpers/fileUpload');
 
 router.get('/all', async(req, res) => {
     try {
@@ -21,13 +22,13 @@ router.get('/:id', async(req, res) => {
 
 router.post('/add', multer({
     storage: multer.diskStorage({
-        destination: (req, file, cb) => { cb(null, './Uploads/certificates') },
+        destination: (req, file, cb) => { cb(null, './tmp_uploads/') },
         filename: (req, file, cb) => { cb(null, 'certificate'.concat('-', Date.now(), '.', file.originalname.split('.').pop())) }
     })
 }).single('certificateImage'), async(req, res) => {
     try {
         const certificate = new Certificate(req.body);
-        certificate.certificateImageUrl = req.protocol.concat('://', req.headers.host, '/uploads/certificates/', req.file.filename);
+        certificate.certificateImageUrl = await fileUploadHelper.imageUpload(req.file, "certificates");
         res.json(await certificate.save());
     } catch (error) {
         res.json({"Error":error});

@@ -1,6 +1,3 @@
 .env
 node_modules
-Upload
-Uploads/certificates
-Uploads/projects
-Uploads/skills
+tmp_uploads

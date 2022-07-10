@@ -7,5 +7,6 @@ module.exports = mongoose.model('Project', new mongoose.Schema ({
     projectDate: {type: String, required: true},
     platformLink: {type: String, required: true},
     githubLink: {type: String, required: true},
-    projectThumblailUrl: {type: String, required: false}
+    projectThumblailUrl: {type: String, required: false},
+    projectVideoUrl: {type: String, required: false}
 }));
