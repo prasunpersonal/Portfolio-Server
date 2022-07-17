@@ -4,7 +4,7 @@ const Education = require('../Models/educationModel');
 
 router.get('/all', async (req, res) => {
     try {
-        res.json((await Education.find()).sort((a,b) => b.completionYear.localeCompare((a.completionYear) ? a.completionYear : new Date().getFullYear)));
+        res.json((await Education.find()).sort((a,b) => b.startingYear.localeCompare(a.startingYear)));
     } catch (error) {
         res.json(error);
     }
