@@ -6,7 +6,7 @@ const fileUploadHelper = require('../Helpers/fileUpload');
 
 router.get('/all', async(req, res) => {
     try {
-        res.json((await Certificate.find()).sort((a, b) => b.certificateDate.localeCompare(a.certificateDate)));
+        res.json((await Certificate.find()).sort((a, b) => new Date(b.certificateDate).getTime() - new Date(a.certificateDate).getTime()));
     } catch (error) {
         res.json({"Error":error});
     }
