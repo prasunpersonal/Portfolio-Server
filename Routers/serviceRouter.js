@@ -13,8 +13,8 @@ router.post('/sendemail', (req, res) => {
         subject: req.body.subject,
         text: req.body.text
     }, (e) => {
-        if (e) res.json({"message": e.message});
-        else res.json({"message": "Mail sent successfully!"});
+        if (e) res.json({ "status": false, "message": e.message});
+        else res.json({ "status": true, "message": "Mail sent successfully!"});
     });
 });
 
