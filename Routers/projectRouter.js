@@ -32,10 +32,10 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-router.post('/add', multer({storage: multer.memoryStorage()}).single('projectThumblail'), async (req, res) => {
+router.post('/add', multer({storage: multer.memoryStorage()}).single('projectThumblnail'), async (req, res) => {
     try {
         const project = new Project(req.body);
-        project.projectThumblailUrl = await fileUploadHelper.imageUpload(req.file, "skills");
+        project.projectThumblnailUrl = await fileUploadHelper.imageUpload(req.file, "projects");
         res.json(await project.save());
     } catch (error) {
         res.json({ "Error": error });
