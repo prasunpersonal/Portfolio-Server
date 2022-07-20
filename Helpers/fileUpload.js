@@ -11,26 +11,26 @@ cloudinary.config({
 module.exports = {
     imageUpload: (file, parentFolder) => {
         return new Promise((resolve, reject) => {
-            cloudinary.uploader.upload(new DatauriParser().format(path.extname(file.originalname).toString(), file.buffer).content, {
+            cloudinary.uploader.upload({
+                resource_type: "auto",
                 folder: "portfolio/images/".concat(parentFolder),
-                public_id: parentFolder.concat('-', Date.now(), '.', file.originalname.split('.').pop())
-            }).then(res => {
-                resolve(res.secure_url);
-            }).catch(err => {
-                reject(err);
-            });
+                public_id: parentFolder.concat('-', Date.now())
+            },(error, result) => {
+                if (error) reject(error);
+                else resolve(result.secure_url);
+            }).end(file.buffer);
         });
     },
     videoUpload: (file, parentFolder) => {
         return new Promise((resolve, reject) => {
-            cloudinary.uploader.upload(new DatauriParser().format(path.extname(file.originalname).toString(), file.buffer).content, {
+            cloudinary.uploader.upload_stream({
+                resource_type: "auto",
                 folder: "portfolio/videos/".concat(parentFolder),
-                public_id: parentFolder.concat('-', Date.now(), '.', file.originalname.split('.').pop())
-            }).then(res => {
-                resolve(res.secure_url);
-            }).catch(err => {
-                reject(err);
-            });
-        });
+                public_id: parentFolder.concat('-', Date.now())
+            },(error, result) => {
+                if (error) reject(error);
+                else resolve(result.secure_url);
+            }).end(file.buffer);
+        })
     }
 }

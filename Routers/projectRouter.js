@@ -35,7 +35,7 @@ router.get('/:id', async (req, res) => {
 router.post('/add', multer({storage: multer.memoryStorage()}).single('projectThumblnail'), async (req, res) => {
     try {
         const project = new Project(req.body);
-        project.projectThumblnailUrl = await fileUploadHelper.imageUpload(req.file, "projects");
+        project.projectVideoUrl = await fileUploadHelper.videoUpload(req.file, "projects");
         res.json(await project.save());
     } catch (error) {
         res.json({ "Error": error });
