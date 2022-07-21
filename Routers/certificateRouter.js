@@ -8,7 +8,7 @@ router.get('/all', async(req, res) => {
     try {
         res.json((await Certificate.find()).sort((a, b) => new Date(b.certificateDate).getTime() - new Date(a.certificateDate).getTime()));
     } catch (error) {
-        res.json({"Error":error});
+        res.json(error);
     }
 });
 
@@ -16,7 +16,7 @@ router.get('/:id', async(req, res) => {
     try {
         res.json(await Certificate.find(req.params.id));
     } catch (error) {
-        res.json({"Error":error});
+        res.json(error);
     }
 });
 
@@ -26,7 +26,7 @@ router.post('/add', multer({storage: multer.memoryStorage()}).single('certificat
         certificate.certificateImageUrl = await fileUploadHelper.imageUpload(req.file, "certificates");
         res.json(await certificate.save());
     } catch (error) {
-        res.json({"Error":error});
+        res.json(error);
     }
 });
 

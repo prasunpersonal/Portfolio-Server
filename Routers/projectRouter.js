@@ -8,7 +8,7 @@ router.get('/all', async (req, res) => {
     try {
         res.json((await Project.find()).sort((a, b) => new Date(b.projectDate).getTime() - new Date(a.projectDate).getTime()));
     } catch (error) {
-        res.json({ "Error": error });
+        res.json(error);
     }
 });
 
@@ -20,7 +20,7 @@ router.get('/categories', async (req, res) => {
         });
         res.json(Array.from(categories).sort());
     } catch (error) {
-        res.json({ "Error": error });
+        res.json(error);
     }
 });
 
@@ -28,7 +28,7 @@ router.get('/:id', async (req, res) => {
     try {
         res.json(await Project.find(req.params.id));
     } catch (error) {
-        res.json({ "Error": error });
+        res.json(error);
     }
 });
 
@@ -38,7 +38,7 @@ router.post('/add', multer({storage: multer.memoryStorage()}).single('projectVid
         project.projectVideoUrl = await fileUploadHelper.videoUpload(req.file, "projects");
         res.json(await project.save());
     } catch (error) {
-        res.json({ "Error": error });
+        res.json(error);
     }
 });
 
