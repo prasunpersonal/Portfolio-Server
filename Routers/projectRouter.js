@@ -6,7 +6,7 @@ const fileUploadHelper = require('../Helpers/fileUpload');
 
 router.get('/all', async (req, res) => {
     try {
-        res.json((await Project.find()).sort((a, b) => new Date(b.certificateDate).getTime() - new Date(a.certificateDate).getTime()));
+        res.json((await Project.find()).sort((a, b) => new Date(b.projectDate).getTime() - new Date(a.projectDate).getTime()));
     } catch (error) {
         res.json({ "Error": error });
     }
