@@ -1,6 +1,4 @@
 const cloudinary = require('cloudinary').v2;
-const path = require('path');
-const DatauriParser = require('datauri/parser');
 
 cloudinary.config({
     cloud_name: process.env.CLOUD_NAME,
