@@ -32,7 +32,7 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-router.post('/add', multer({storage: multer.memoryStorage()}).single('projectThumblnail'), async (req, res) => {
+router.post('/add', multer({storage: multer.memoryStorage()}).single('projectVideo'), async (req, res) => {
     try {
         const project = new Project(req.body);
         project.projectVideoUrl = await fileUploadHelper.videoUpload(req.file, "projects");
