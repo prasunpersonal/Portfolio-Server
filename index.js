@@ -5,12 +5,6 @@ const app = express();
 const port = process.env.PORT || 8000;
 
 require('dotenv').config();
-require("cloudinary").config({
-    cloud_name: process.env.CLOUD_NAME,
-    api_key: process.env.API_KEY,
-    api_secret: process.env.API_SECRET,
-    secure: true
-});
 
 mongoose.connect(process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true }, (error) => {
     if (error) {

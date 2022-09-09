@@ -3,13 +3,14 @@ const cloudinary = require('cloudinary').v2;
 cloudinary.config({
     cloud_name: process.env.CLOUD_NAME,
     api_key: process.env.API_KEY,
-    api_secret: process.env.API_SECRET
+    api_secret: process.env.API_SECRET,
+    secure: true
 });
 
 module.exports = {
     imageUpload: (file, parentFolder) => {
         return new Promise((resolve, reject) => {
-            cloudinary.uploader.upload({
+            cloudinary.uploader.upload_stream({
                 resource_type: "auto",
                 folder: "portfolio/images/".concat(parentFolder),
                 public_id: parentFolder.concat('-', Date.now())
