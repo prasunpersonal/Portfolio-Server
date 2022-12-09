@@ -23,6 +23,7 @@ module.exports = {
                 reject(error);
             });
 
+
             // cloudinary.uploader.upload_stream({
             //     resource_type: "auto",
             //     folder: "portfolio/images/".concat(parentFolder),
@@ -37,7 +38,7 @@ module.exports = {
         return new Promise((resolve, reject) => {
             s3.upload({
                 Bucket: "cyclic-rich-gold-rabbit-gear-ap-southeast-2",
-                Key: "portfolio/videos/".concat(parentFolder, '-', Date.now()),
+                Key: "portfolio/videos/".concat(parentFolder, '-', Date.now(), '.', file.filename.split('.')[-1]),
                 Body: fs.readFileSync(file.path),
             }).promise().then((data)=> {
                 resolve(data.Location);
