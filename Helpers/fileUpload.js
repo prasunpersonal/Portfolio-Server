@@ -15,8 +15,7 @@ module.exports = {
         return new Promise((resolve, reject) => {
             s3.upload({
                 Bucket: "cyclic-rich-gold-rabbit-gear-ap-southeast-2",
-                // Key: "portfolio/images/".concat(parentFolder, '/', file.filename),
-                Key: "portfolio/images/"+file.originalname,
+                Key: "portfolio/images/".concat(parentFolder, '/', file.originalname),
                 Body: fs.readFileSync(file.path),
             }, (err, data) => {
                 console.log(err);
@@ -43,7 +42,7 @@ module.exports = {
             s3.upload({
                 Bucket: "cyclic-rich-gold-rabbit-gear-ap-southeast-2",
                 Key: "portfolio/videos/".concat(parentFolder, '-', Date.now(), '.', file.filename.split('.')[-1]),
-                Body: fs.readFileSync(file.path),
+                Body: file.buffer,
             }).promise().then((data)=> {
                 resolve(data.Location);
             }).catch((error)=> {
