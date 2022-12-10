@@ -12,14 +12,14 @@ const s3 = new AWS.S3();
 
 module.exports = {
     imageUpload: (file, parentFolder) => {
-        console.log(file);
         return new Promise((resolve, reject) => {
             s3.upload({
                 Bucket: "cyclic-rich-gold-rabbit-gear-ap-southeast-2",
                 // Key: "portfolio/images/".concat(parentFolder, '/', file.filename),
-                Key: "portfolio/images/"+file.filename,
+                Key: "portfolio/images/"+file.originalname,
                 Body: fs.readFileSync(file.path),
             }).promise().then((data)=> {
+                console.log(data.Location);
                 resolve(data.Location);
             }).catch((error)=> {
                 reject(error);
