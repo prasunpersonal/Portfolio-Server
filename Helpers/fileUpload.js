@@ -18,12 +18,14 @@ module.exports = {
                 // Key: "portfolio/images/".concat(parentFolder, '/', file.filename),
                 Key: "portfolio/images/"+file.originalname,
                 Body: fs.readFileSync(file.path),
-            }).promise().then((data)=> {
-                console.log(data.Location);
-                resolve(data.Location);
-            }).catch((error)=> {
-                reject(error);
-            });
+            }, (err, data) => {
+                console.log(err);
+                console.log(data);
+                if (err) {
+                  reject(err)
+                }
+                resolve(data.Location)
+              });
 
 
             // cloudinary.uploader.upload_stream({
