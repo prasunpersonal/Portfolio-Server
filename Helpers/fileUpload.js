@@ -13,7 +13,7 @@ module.exports = {
     imageUpload: (file, parentFolder) => {
         return new Promise((resolve, reject) => {
             s3.upload({
-                Bucket: "cyclic-rich-gold-rabbit-gear-ap-southeast-2",
+                Bucket: BUCKET_NAME,
                 Key: "portfolio/images/".concat(parentFolder, '/', file.originalname),
                 Body: file.buffer,
                 // ACL:'public-read'
@@ -37,7 +37,7 @@ module.exports = {
     videoUpload: (file, parentFolder) => {
         return new Promise((resolve, reject) => {
             s3.upload({
-                Bucket: "cyclic-rich-gold-rabbit-gear-ap-southeast-2",
+                Bucket: BUCKET_NAME,
                 Key: "portfolio/videos/".concat(parentFolder, '-', Date.now(), '.', file.filename.split('.')[-1]),
                 Body: file.buffer,
             }).promise().then((data)=> {
