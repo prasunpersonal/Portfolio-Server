@@ -12,6 +12,7 @@ const s3 = new AWS.S3();
 
 module.exports = {
     imageUpload: (file, parentFolder) => {
+        console.log(file);
         return new Promise((resolve, reject) => {
             s3.upload({
                 Bucket: "cyclic-rich-gold-rabbit-gear-ap-southeast-2",
