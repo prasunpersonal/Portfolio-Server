@@ -16,7 +16,7 @@ module.exports = {
             s3.upload({
                 Bucket: "cyclic-rich-gold-rabbit-gear-ap-southeast-2",
                 Key: "portfolio/images/".concat(parentFolder, '/', file.originalname),
-                Body: fs.readFileSync(file.path),
+                Body: file.buffer,
             }, (err, data) => {
                 console.log(err);
                 console.log(data);
