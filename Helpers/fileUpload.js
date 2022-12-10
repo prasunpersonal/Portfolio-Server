@@ -1,6 +1,5 @@
 // const cloudinary = require('cloudinary').v2;
 const AWS = require("aws-sdk");
-const fs = require('fs');
 const s3 = new AWS.S3();
 
 // cloudinary.config({
@@ -17,7 +16,7 @@ module.exports = {
                 Bucket: "cyclic-rich-gold-rabbit-gear-ap-southeast-2",
                 Key: "portfolio/images/".concat(parentFolder, '/', file.originalname),
                 Body: file.buffer,
-                ACL:'public-read'
+                // ACL:'public-read'
             }).promise().then((data)=> {
                 resolve(data.Location);
             }).catch((error)=> {
