@@ -13,18 +13,15 @@ const s3 = new AWS.S3();
 module.exports = {
     imageUpload: (file, parentFolder) => {
         return new Promise((resolve, reject) => {
-            s3.upload({
+            s3.putObject({
                 Bucket: "cyclic-rich-gold-rabbit-gear-ap-southeast-2",
                 Key: "portfolio/images/".concat(parentFolder, '/', file.originalname),
                 Body: file.buffer,
-            }, (err, data) => {
-                console.log(err);
-                console.log(data);
-                if (err) {
-                  reject(err)
-                }
-                resolve(data.Location)
-              });
+            }).promise().then((data)=> {
+                resolve(data.Location);
+            }).catch((error)=> {
+                reject(error);
+            });
 
 
             // cloudinary.uploader.upload_stream({
