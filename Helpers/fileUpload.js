@@ -16,7 +16,6 @@ module.exports = {
                 Bucket: BUCKET_NAME,
                 Key: "portfolio/images/".concat(parentFolder, '/', file.originalname),
                 Body: file.buffer,
-                // ACL:'public-read'
             }).promise().then((data)=> {
                 resolve(data.Location);
             }).catch((error)=> {
@@ -38,7 +37,7 @@ module.exports = {
         return new Promise((resolve, reject) => {
             s3.upload({
                 Bucket: BUCKET_NAME,
-                Key: "portfolio/videos/".concat(parentFolder, '-', Date.now(), '.', file.filename.split('.')[-1]),
+                Key: "portfolio/videos/".concat(parentFolder, '/', file.originalname),
                 Body: file.buffer,
             }).promise().then((data)=> {
                 resolve(data.Location);
