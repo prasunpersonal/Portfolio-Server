@@ -2,6 +2,14 @@
 const AWS = require("aws-sdk");
 const s3 = new AWS.S3();
 
+s3.getBucketAcl({Bucket: process.argv[2]}, function (err, data) {
+    if (err) {
+        console.log("Error", err);
+    } else if (data) {
+        console.log("Success", data.Grants);
+    }
+});
+
 // cloudinary.config({
 //     cloud_name: process.env.CLOUD_NAME,
 //     api_key: process.env.API_KEY,
@@ -16,10 +24,10 @@ module.exports = {
                 Bucket: process.env.BUCKET,
                 Key: "portfolio/images/".concat(parentFolder, '/', file.originalname),
                 Body: file.buffer,
-            }).promise().then((data)=> {
+            }).promise().then((data) => {
                 console.log(data);
                 resolve(data.Location);
-            }).catch((error)=> {
+            }).catch((error) => {
                 reject(error);
             });
 
@@ -40,9 +48,9 @@ module.exports = {
                 Bucket: BUCKET_NAME,
                 Key: "portfolio/videos/".concat(parentFolder, '/', file.originalname),
                 Body: file.buffer,
-            }).promise().then((data)=> {
+            }).promise().then((data) => {
                 resolve(data.Location);
-            }).catch((error)=> {
+            }).catch((error) => {
                 reject(error);
             });
 
