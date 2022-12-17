@@ -21,17 +21,17 @@ router.get('/:id', async(req, res) => {
 });
 
 router.post('/add', multer({storage: multer.memoryStorage()}).single('certificateImage'), async(req, res) => {
-    const certificate = new Certificate(req.body);
-    certificate.certificateImage = await fileUpload.imageUpload(req.file, 'certificates');
-    console.log(certificate.certificateImage);
-
-    // certificate.certificateImage = 'data:' + req.file.mimetype + ';' + 'base64' + ',' + new Buffer.from(req.file.buffer).toString('base64');
-    // certificate.save().then(value => {
-    //     res.json(value);
-    // }).catch(error => {
-    //     res.json(error);
-    // });
-    res.send(certificate.certificateImage);
+    fileUpload(req.file, 'certificates').then(value => {
+        const certificate = new Certificate(req.body);
+        certificate.certificateImage = value; 
+        certificate.save().then(c => {
+            res.json(c);
+        }).catch(error => {
+            res.json(error);
+        });
+    }).catch(error => {
+        res.json(error);
+    });
 });
 
 router.patch('/update/:id', async (req, res) => {

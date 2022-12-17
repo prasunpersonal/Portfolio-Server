@@ -16,7 +16,7 @@ mongoose.connect(process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology
     }
 });
 
-app.use(express.json({limit: 5000000000}));
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 

@@ -2,6 +2,7 @@ const express = require('express');
 const multer = require('multer');
 const router = express.Router();
 const Skill = require('../Models/skillModel');
+const fileUpload = require('../Helpers/fileUpload');
 
 router.get('/all', async (req, res) => {
     Skill.find().then(value => {
@@ -36,10 +37,14 @@ router.get('/profiles', async (req, res) => {
 });
 
 router.post('/add', multer({storage: multer.memoryStorage()}).single('skillImage'), async (req, res) => {
-    const skill = new Skill(req.body);
-    skill.skillImage = 'data:' + req.file.mimetype + ';' + 'base64' + ',' + new Buffer.from(req.file.buffer).toString('base64');
-    skill.save().then(value => {
-        res.json(value);
+    fileUpload(req.file, 'certificates').then(value => {
+        const skill = new Skill(req.body);
+        skill.skillImage = value;
+        skill.save().then(s => {
+            res.json(s);
+        }).catch(error => {
+            res.json(error);
+        });
     }).catch(error => {
         res.json(error);
     });

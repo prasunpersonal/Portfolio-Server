@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const Project = require('../Models/projectModel');
+const fileUpload = require('../Helpers/fileUpload');
 
 router.get('/all', async (req, res) => {
     Project.find().then(value => {
@@ -33,10 +34,14 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/add', multer({storage: multer.memoryStorage()}).single('projectVideo'), async (req, res) => {
-    const project = new Project(req.body);
-    project.projectVideo = 'data:' + req.file.mimetype + ';' + 'base64' + ',' + new Buffer.from(req.file.buffer).toString('base64');
-    project.save().then(value => {
-        res.json(value);
+    fileUpload(req.file, 'projects').then(value => {
+        const project = new Project(req.body);
+        project.projectVideo = value;
+        project.save().then(p => {
+            res.json(p);
+        }).catch(error => {
+            res.json(error);
+        });
     }).catch(error => {
         res.json(error);
     });
