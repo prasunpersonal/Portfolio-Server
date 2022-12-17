@@ -17,6 +17,7 @@ module.exports = {
                 Key: "portfolio/images/".concat(parentFolder, '/', file.originalname),
                 Body: file.buffer,
             }).promise().then((data)=> {
+                console.log(data);
                 resolve(data.Location);
             }).catch((error)=> {
                 reject(error);
