@@ -10,14 +10,13 @@ mongoose.connect(process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology
         console.log("Error: " + error);
     } else {
         console.log("Connected to server!");
+        app.listen(port, () => {
+            console.log('Server running on port ' + port);
+        });
     }
 });
 
-app.listen(port, () => {
-    console.log('Server running on port ' + port);
-});
-
-app.use(express.json());
+app.use(express.json({limit: 5000000000}));
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
@@ -27,3 +26,4 @@ app.use('/certificates', require('./Routers/certificateRouter'));
 app.use('/educations', require('./Routers/educationRoute'));
 app.use('/experiences', require('./Routers/experienceRoute'));
 app.use('/services', require('./Routers/serviceRouter'));
+app.use('/upload', require('./Helpers/fileUpload'));

@@ -13,7 +13,7 @@ module.exports = {
     imageUpload: (file, parentFolder) => {
         return new Promise((resolve, reject) => {
             s3.upload({
-                Bucket: BUCKET_NAME,
+                Bucket: process.env.BUCKET,
                 Key: "portfolio/images/".concat(parentFolder, '/', file.originalname),
                 Body: file.buffer,
             }).promise().then((data)=> {

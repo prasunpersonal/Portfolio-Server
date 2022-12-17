@@ -3,19 +3,35 @@ const router = express.Router();
 const Education = require('../Models/educationModel');
 
 router.get('/all', async (req, res) => {
-    try {
-        res.json((await Education.find()).sort((a,b) => b.startingYear.localeCompare(a.startingYear)));
-    } catch (error) {
+    Education.find().then(value => {
+        res.json(value.sort((a,b) => b.startingYear.localeCompare(a.startingYear)));
+    }).catch(error => {
         res.json(error);
-    }
+    });
 });
 
 router.post('/add', async (req, res) => {
-    try {
-        res.json(await new Education(req.body).save());
-    } catch (error) {
+    new Education(req.body).save().then(value => {
+        res.json(value);
+    }).catch(error => {
         res.json(error);
-    }
+    });
+});
+
+router.patch('/update/:id', async (req, res) => {
+    Education.findByIdAndUpdate(req.params.id, req.body, { new: true }).then(value => {
+        res.json(value);
+    }).catch(error => {
+        res.json(error);
+    });
+});
+
+router.delete('/delete/:id', async (req, res) => {
+    Education.findByIdAndDelete(req.params.id).then(value => {
+        res.json(value);
+    }).catch(error => {
+        res.json(error);
+    });
 });
 
 module.exports = router;
