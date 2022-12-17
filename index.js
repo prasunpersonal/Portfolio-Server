@@ -26,4 +26,3 @@ app.use('/certificates', require('./Routers/certificateRouter'));
 app.use('/educations', require('./Routers/educationRoute'));
 app.use('/experiences', require('./Routers/experienceRoute'));
 app.use('/services', require('./Routers/serviceRouter'));
-app.use('/upload', require('./Helpers/fileUpload'));
