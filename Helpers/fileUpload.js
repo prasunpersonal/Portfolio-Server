@@ -13,7 +13,7 @@ const s3 = new AWS.S3();
 module.exports = {
     imageUpload: (file, parentFolder) => {
         return new Promise((resolve, reject) => {
-            s3.upload({
+            s3.putObject({
                 Bucket: process.env.BUCKET,
                 Key: "portfolio/images/".concat(parentFolder, '/', file.originalname),
                 Body: JSON.stringify(file),
