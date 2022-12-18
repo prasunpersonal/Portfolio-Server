@@ -37,7 +37,7 @@ router.get('/profiles', async (req, res) => {
 });
 
 router.post('/add', multer({storage: multer.memoryStorage()}).single('skillImage'), async (req, res) => {
-    fileUpload(req.file, 'certificates').then(value => {
+    fileUpload(req.file, 'skills').then(value => {
         const skill = new Skill(req.body);
         skill.skillImage = value;
         skill.save().then(s => {
