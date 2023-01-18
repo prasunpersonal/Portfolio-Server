@@ -13,7 +13,7 @@ router.get('/all', async(req, res) => {
 });
 
 router.get('/:id', async(req, res) => {
-    Certificate.find(req.params.id).then(value => {
+    Certificate.findById(req.params.id).then(value => {
         res.json(value);
     }).catch(error => {
         res.send(error.message);
