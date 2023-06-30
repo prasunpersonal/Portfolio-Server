@@ -5,7 +5,7 @@ const mailgun = require('nodemailer-mailgun-transport');
 
 router.post('/sendemail', (req, res) => {    
     nodemailer.createTransport(mailgun({auth: {
-        api_key: process.env.MAILGUN_API_KEY,
+        apiKey: process.env.MAILGUN_API_KEY,
         domain: process.env.MAILGUN_DOMAIN
     }})).sendMail({
         to: process.env.GMAIL_ADDRESS,
