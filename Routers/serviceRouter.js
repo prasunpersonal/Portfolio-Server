@@ -1,24 +1,20 @@
 const express = require('express');
 const router = express.Router();
-const nodemailer = require('nodemailer');
-const mailgun = require('nodemailer-mailgun-transport');
+const Mailgun = require('mailgun.js');
 
-router.post('/sendemail', (req, res) => { 
-    console.log(process.env.GMAIL_ADDRESS);   
-    console.log(process.env.MAILGUN_API_KEY);   
-    console.log(process.env.MAILGUN_DOMAIN);   
-    
-    nodemailer.createTransport(mailgun({auth: {
-        apiKey: process.env.MAILGUN_API_KEY,
-        domain: process.env.MAILGUN_DOMAIN
-    }})).sendMail({
+router.post('/sendemail', (req, res) => {
+    new Mailgun(require('form-data')).client({
+        username: 'prasunpersonal',
+        key: process.env.MAILGUN_API_KEY
+    }).messages.create(process.env.MAILGUN_DOMAIN, {
         to: process.env.GMAIL_ADDRESS,
-        from: "Portfolio @ ".concat(req.body.name,' <', req.body.email, '>'),
+        from: "Portfolio @ ".concat(req.body.name, ' <', req.body.email, '>'),
         subject: req.body.subject,
         text: req.body.text
-    }, (e) => {
-        if (e) res.json({ "status": false, "message": e.message});
-        else res.json({ "status": true, "message": "Mail sent successfully!"});
+    }).then((val) => {
+        res.status(200).json({ "status": true, "message": "Mail sent successfully!" });
+    }).catch((err) => {
+        res.status(400).json({ "status": false, "message": err.message });
     });
 });
 
